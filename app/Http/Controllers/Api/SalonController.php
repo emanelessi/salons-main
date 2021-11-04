@@ -41,9 +41,9 @@ class SalonController extends Controller
         return $this->salon->edit($request->all());
     }
 
-    public function editRequest(editRequest $request)
+    public function change_status(editRequest $request)
     {
-        return $this->salon->editRequest($request->all());
+        return $this->salon->change_status($request->all());
     }
 
     public function search(SearchRequest $request)

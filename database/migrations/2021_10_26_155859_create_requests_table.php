@@ -21,7 +21,7 @@ class CreateRequestsTable extends Migration
             $table->foreign('salon_id')->references('id')->on('salons')->onDelete('cascade');
             $table->unsignedBigInteger('salon_seat_id');
             $table->foreign('salon_seat_id')->references('id')->on('salon_seats')->onDelete('cascade');
-            $table->enum('status',['pending','accepted','done']);
+            $table->enum('status',['pending','accepted','done','rejected','cancel']);
             $table->time('time')->default(0);
             $table->timestamps();
         });

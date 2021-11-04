@@ -55,8 +55,8 @@ class SalonEloquent
         $salon->latitude = $data['latitude'];
         $salon->longitude = $data['longitude'];
         $salon->seats_number = $data['seats_number'];
-        $salon->isactive = 0;
-        $salon->isonline = $data['isonline'];
+        $salon->is_active = 0;
+        $salon->is_online = $data['is_online'];
         $salon->user_id = auth()->user()->id;
         $salon->save();
         for ($i = 1; $i <= $data['seats_number']; $i++) {
@@ -87,14 +87,14 @@ class SalonEloquent
         if ($data['seats_number'] != null) {
             $salon->seats_number = $data['seats_number'];
         }
-        if ($data['isonline'] != null) {
-            $salon->isonline = $data['isonline'];
+        if ($data['is_online'] != null) {
+            $salon->isonline = $data['is_online'];
         }
         $salon->save();
         return response_api(true, 200, 'Successfully Updated!', new salonResource($salon));
     }
 
-    public function editRequest(array $data)
+    public function change_status(array $data)
     {
         $id = auth()->user()->id;
         $request = Request::where("user_id", $id)->first();

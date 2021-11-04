@@ -20,8 +20,8 @@ class CreateSalonsTable extends Migration
             $table->decimal('latitude', 10, 8);
             $table->decimal('longitude', 11, 8);
             $table->integer('seats_number');
-            $table->boolean('isactive')->default(0);
-            $table->boolean('isonline');
+            $table->boolean('is_active')->default(0);
+            $table->boolean('is_online');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
