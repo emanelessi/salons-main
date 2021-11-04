@@ -9,6 +9,7 @@ use App\Http\Resources\salonResource;
 use App\Http\Resources\salonSeatResource;
 use App\Models\Request;
 use App\Models\Salon;
+use App\Models\SalonSeat;
 
 class SalonEloquent
 {
@@ -64,9 +65,9 @@ class SalonEloquent
     {
         $page_number = intval(\request()->get('page_number'));
         $page_size = \request()->get('page_size');
-        $total_records = Request::count();
+        $total_records = SalonSeat::count();
         $total_pages = ceil($total_records / $page_size);
-        $request = Request::skip(($page_number - 1) * $page_size)
+        $request = SalonSeat::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
         $data = [
             'status' => true,

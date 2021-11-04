@@ -15,16 +15,11 @@ class requestResource extends JsonResource
     public function toArray($request)
     {
         return [
-//            'user_id'=>userResource::collection($this->name),
-//            'salon_id'=>salonResource::collection($this->name),
-//            'salon_seat_id'=>salonResource::collection($this->seats_number),
-
-            'user_id'=>$this->user_id,
-            'salon_id'=>$this->salon_id,
-            'salon_seat_id'=>$this->salon_seat_id,
+            'user'=>new userResource($this->User),
+            'salon'=>new salonResource($this->Salon),
+            'salon_seat'=>new salonSeatResource($this->SalonSeat),
             'status'=>$this->status,
             'time'=>$this->time,
-
         ];
     }
 }

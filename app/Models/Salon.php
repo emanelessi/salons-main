@@ -14,4 +14,7 @@ class Salon extends Model
     public function Users(){
         return $this->belongsToMany(User::class, 'requests');
     }
+    public function Requests(){
+        return $this->hasMany(Request::class, 'salon_id');
+    }
 }

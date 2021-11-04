@@ -45,4 +45,7 @@ class User extends Authenticatable
     public function Salons(){
         return $this->belongsToMany(Salon::class, 'requests');
     }
+    public function Requests(){
+        return $this->hasMany(Request::class, 'user_id');
+    }
 }

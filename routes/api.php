@@ -25,5 +25,4 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('request', [SalonController::class, 'request']);
     Route::post('salon/seat', [SalonController::class, 'salonSeat']);
 
-
 });
