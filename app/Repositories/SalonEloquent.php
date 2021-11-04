@@ -11,6 +11,7 @@ use App\Models\Request;
 use App\Models\Salon;
 use App\Models\SalonSeat;
 use App\Models\User;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class SalonEloquent
@@ -55,17 +56,17 @@ class SalonEloquent
         $salon->latitude = $data['latitude'];
         $salon->longitude = $data['longitude'];
         $salon->seats_number = $data['seats_number'];
-        for ($i=0;$i<$data['seats_number'];$i++){
+        $salon->isactive = 0;
+        $salon->isonline = $data['isonline'];
+        $salon->user_id  = auth()->user()->id;
+        $salon->save();
+        for ($i=1;$i<=$data['seats_number'];$i++){
             $salon_seat= new SalonSeat();
             $salon_seat->seat_number=$i;
             $salon_seat->status='available';
             $salon_seat->salon_id=$salon->id;
             $salon_seat->save();
         }
-        $salon->isactive = 0;
-        $salon->isonline = $data['isonline'];
-        $salon->user_id  = auth()->user()->id;
-        $salon->save();
         return response_api(true, 200, 'Successfully Added!',new salonResource($salon));
 
     }
@@ -90,6 +91,15 @@ class SalonEloquent
         }
         $salon->save();
         return response_api(true, 200, 'Successfully Updated!',  new salonResource($salon));
+    }
+    public function editRequest(array  $data){
+        $id = auth()->user()->id;
+        $request = Request::where("user_id",$id)->first();
+        if ($data['status'] != null) {
+            $request->status = $data['status'];
+        }
+        $request->save();
+        return response_api(true, 200, 'Successfully Updated!',  new requestResource($request));
     }
 
 

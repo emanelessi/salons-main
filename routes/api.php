@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('salon/add', [SalonController::class, 'add']);
     Route::put('salon/edit', [SalonController::class, 'edit']);
     Route::post('request', [SalonController::class, 'request']);
+    Route::put('request/edit', [SalonController::class, 'editRequest']);
     Route::post('salon/seat', [SalonController::class, 'salonSeat']);
 
 
