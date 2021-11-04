@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Salon\SearchRequest;
 use App\Http\Requests\User\ProfileRequest;
 use App\Http\Requests\User\SignupRequest;
 use App\Repositories\UserEloquent;
@@ -34,4 +35,5 @@ class UserController extends Controller
     {
         return $this->user->editProfile($request->all());
     }
+
 }

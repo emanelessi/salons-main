@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Salon\editRequest;
 use App\Http\Requests\Salon\salonRequest;
 use App\Http\Requests\Salon\salonSeatsRequest;
+use App\Http\Requests\Salon\SearchRequest;
 use App\Repositories\SalonEloquent;
 use Illuminate\Http\Request;
 
@@ -39,6 +40,9 @@ class SalonController extends Controller
     public function editRequest(editRequest $request)
     {
         return $this->salon->editRequest($request->all());
+    }
+    public function search(SearchRequest $request){
+        return $this->salon->search($request->all());
     }
 
 }

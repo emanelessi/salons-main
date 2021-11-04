@@ -102,6 +102,14 @@ class SalonEloquent
         return response_api(true, 200, 'Successfully Updated!',  new requestResource($request));
     }
 
+    public function search(array $data)
+    {
+        $salon_name = $data['name'];
+        $salon = Salon::where("name", "like", "%$salon_name%")->first();
+        return response_api(true, 200, 'Success',  new salonResource($salon));
+    }
+
+
 
 
 }
