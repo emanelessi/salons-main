@@ -1,8 +1,6 @@
 <?php
 
-
 namespace App\Repositories;
-
 
 use App\Http\Resources\requestResource;
 use App\Http\Resources\salonResource;
@@ -10,9 +8,6 @@ use App\Http\Resources\salonSeatResource;
 use App\Models\Request;
 use App\Models\Salon;
 use App\Models\SalonSeat;
-use App\Models\User;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Http\Resources\Json\JsonResource;
 
 class SalonEloquent
 {
@@ -24,8 +19,9 @@ class SalonEloquent
         $total_pages = ceil($total_records / $page_size);
         $salon = Salon::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
-        return response_api(true, 200, 'Success',salonResource::collection($salon),$page_number,$total_pages,$total_records);
+        return response_api(true, 200, 'Success', salonResource::collection($salon), $page_number, $total_pages, $total_records);
     }
+
     public function request()
     {
         $page_number = intval(\request()->get('page_number'));
@@ -34,9 +30,10 @@ class SalonEloquent
         $total_pages = ceil($total_records / $page_size);
         $request = Request::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
-        return response_api(true, 200, 'Success',requestResource::collection($request),$page_number,$total_pages,$total_records);
+        return response_api(true, 200, 'Success', requestResource::collection($request), $page_number, $total_pages, $total_records);
 
     }
+
     public function salonSeat()
     {
         $page_number = intval(\request()->get('page_number'));
@@ -46,10 +43,12 @@ class SalonEloquent
         $salon_seat = SalonSeat::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
 
-        return response_api(true, 200, 'Success',salonSeatResource::collection($salon_seat),$page_number,$total_pages,$total_records);
+        return response_api(true, 200, 'Success', salonSeatResource::collection($salon_seat), $page_number, $total_pages, $total_records);
 
     }
-    public function add(array $data){
+
+    public function add(array $data)
+    {
         $salon = new Salon();
         $salon->name = $data['name'];
         $salon->address = $data['address'];
@@ -58,21 +57,23 @@ class SalonEloquent
         $salon->seats_number = $data['seats_number'];
         $salon->isactive = 0;
         $salon->isonline = $data['isonline'];
-        $salon->user_id  = auth()->user()->id;
+        $salon->user_id = auth()->user()->id;
         $salon->save();
-        for ($i=1;$i<=$data['seats_number'];$i++){
-            $salon_seat= new SalonSeat();
-            $salon_seat->seat_number=$i;
-            $salon_seat->status='available';
-            $salon_seat->salon_id=$salon->id;
+        for ($i = 1; $i <= $data['seats_number']; $i++) {
+            $salon_seat = new SalonSeat();
+            $salon_seat->seat_number = $i;
+            $salon_seat->status = 'available';
+            $salon_seat->salon_id = $salon->id;
             $salon_seat->save();
         }
-        return response_api(true, 200, 'Successfully Added!',new salonResource($salon));
+        return response_api(true, 200, 'Successfully Added!', new salonResource($salon));
 
     }
-    public function edit(array  $data){
+
+    public function edit(array $data)
+    {
         $id = auth()->user()->id;
-        $salon = Salon::where("user_id",$id)->first();
+        $salon = Salon::where("user_id", $id)->first();
         $salon->name = $data['name'];
         if ($data['address'] != null) {
             $salon->address = $data['address'];
@@ -84,32 +85,31 @@ class SalonEloquent
             $salon->longitude = $data['longitude'];
         }
         if ($data['seats_number'] != null) {
-            $salon->longitude = $data['seats_number'];
+            $salon->seats_number = $data['seats_number'];
         }
         if ($data['isonline'] != null) {
-            $salon->longitude = $data['isonline'];
+            $salon->isonline = $data['isonline'];
         }
         $salon->save();
-        return response_api(true, 200, 'Successfully Updated!',  new salonResource($salon));
+        return response_api(true, 200, 'Successfully Updated!', new salonResource($salon));
     }
-    public function editRequest(array  $data){
+
+    public function editRequest(array $data)
+    {
         $id = auth()->user()->id;
-        $request = Request::where("user_id",$id)->first();
+        $request = Request::where("user_id", $id)->first();
         if ($data['status'] != null) {
             $request->status = $data['status'];
         }
         $request->save();
-        return response_api(true, 200, 'Successfully Updated!',  new requestResource($request));
+        return response_api(true, 200, 'Successfully Updated!', new requestResource($request));
     }
 
     public function search(array $data)
     {
         $salon_name = $data['name'];
         $salon = Salon::where("name", "like", "%$salon_name%")->first();
-        return response_api(true, 200, 'Success',  new salonResource($salon));
+        return response_api(true, 200, 'Success', new salonResource($salon));
     }
-
-
-
 
 }

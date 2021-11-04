@@ -26,11 +26,13 @@ class UserController extends Controller
         return $this->user->register($request->all());
 
     }
+
     public function profile($id = null)
     {
         return $this->user->profile($id);
 
     }
+
     public function edit(ProfileRequest $request)
     {
         return $this->user->editProfile($request->all());

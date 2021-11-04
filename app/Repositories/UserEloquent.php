@@ -70,7 +70,8 @@ class UserEloquent
         return response_api(true, 200, 'Success', new profileResource($user));
     }
 
-    public function editProfile(array  $data){
+    public function editProfile(array $data)
+    {
         $id = auth()->user()->id;
         $user = User::find($id);
         $user->full_name = $data['full_name'];

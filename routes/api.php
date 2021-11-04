@@ -18,7 +18,7 @@ use \App\Http\Controllers\Api\SalonController;
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/login', [UserController::class, 'login']);
-Route::post('search',[SalonController::class,'search']);
+Route::post('search', [SalonController::class, 'search']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile/{id?}', [UserController::class, 'profile']);
     Route::put('profile/edit', [UserController::class, 'edit']);
@@ -28,7 +28,6 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::post('request', [SalonController::class, 'request']);
     Route::put('request/edit', [SalonController::class, 'editRequest']);
     Route::post('salon/seat', [SalonController::class, 'salonSeat']);
-
 
 
 });

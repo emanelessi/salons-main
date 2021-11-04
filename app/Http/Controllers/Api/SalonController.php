@@ -8,18 +8,19 @@ use App\Http\Requests\Salon\salonRequest;
 use App\Http\Requests\Salon\salonSeatsRequest;
 use App\Http\Requests\Salon\SearchRequest;
 use App\Repositories\SalonEloquent;
-use Illuminate\Http\Request;
 
 class SalonController extends Controller
 {
     public function __construct(SalonEloquent $salonEloquent)
     {
-        $this->salon= $salonEloquent;
+        $this->salon = $salonEloquent;
     }
+
     public function show()
     {
         return $this->salon->show();
     }
+
     public function request()
     {
         return $this->salon->request();
@@ -29,19 +30,24 @@ class SalonController extends Controller
     {
         return $this->salon->salonSeat();
     }
+
     public function add(salonRequest $request)
     {
         return $this->salon->add($request->all());
     }
+
     public function edit(salonRequest $request)
     {
         return $this->salon->edit($request->all());
     }
+
     public function editRequest(editRequest $request)
     {
         return $this->salon->editRequest($request->all());
     }
-    public function search(SearchRequest $request){
+
+    public function search(SearchRequest $request)
+    {
         return $this->salon->search($request->all());
     }
 
