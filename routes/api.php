@@ -22,7 +22,10 @@ Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile/{id?}', [UserController::class, 'profile']);
     Route::put('profile/edit', [UserController::class, 'edit']);
     Route::post('salon', [SalonController::class, 'show']);
+    Route::post('salon/add', [SalonController::class, 'add']);
+    Route::put('salon/edit', [SalonController::class, 'edit']);
     Route::post('request', [SalonController::class, 'request']);
     Route::post('salon/seat', [SalonController::class, 'salonSeat']);
+
 
 });

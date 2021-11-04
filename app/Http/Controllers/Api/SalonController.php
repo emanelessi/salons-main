@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Salon\salonRequest;
+use App\Http\Requests\Salon\salonSeatsRequest;
 use App\Repositories\SalonEloquent;
 use Illuminate\Http\Request;
 
@@ -24,6 +26,14 @@ class SalonController extends Controller
     public function salonSeat()
     {
         return $this->salon->salonSeat();
+    }
+    public function add(salonRequest $request)
+    {
+        return $this->salon->add($request->all());
+    }
+    public function edit(salonRequest $request)
+    {
+        return $this->salon->edit($request->all());
     }
 
 }

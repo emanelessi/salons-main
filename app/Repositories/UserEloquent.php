@@ -14,6 +14,7 @@ use App\Models\User_education;
 use App\Models\User_experience;
 use App\Models\User_social;
 use Illuminate\Http\Request;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Twilio\Rest\Client;
@@ -62,27 +63,11 @@ class UserEloquent
         if (isset($id)) {
             $user = User::find($id);
             if (!isset($user)) {
-                $data = [
-                    'status' => false,
-                    'statusCode' => 422,
-                    'message' => 'Error',
-                    'items' => new \stdClass(),
-
-                ];
-
-                return response()->json($data);
+                return response_api(false, 422, 'Error', new \stdClass());
             }
         }
         $user = isset($id) ? $user : \auth()->user();
-        $data = [
-            'status' => true,
-            'statusCode' => 200,
-            'message' => 'Success',
-            'items' => new profileResource($user)
-
-        ];
-
-        return response()->json($data);
+        return response_api(true, 200, 'Success', new profileResource($user));
     }
 
     public function editProfile(array  $data){
@@ -99,16 +84,7 @@ class UserEloquent
             $user->img = $data['photo'];
         }
         $user->save();
-        $data = [
-            'status' => true,
-            'statusCode' => 200,
-            'message' => 'Successfully Updated!',
-            'items' => [
-                'profile' => new editprofileResource($user),
-            ],
-
-        ];
-        return response()->json($data);
+        return response_api(true, 200, 'Successfully Updated!', ['profile' => new editprofileResource($user)]);
     }
 
 }

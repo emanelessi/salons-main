@@ -10,6 +10,8 @@ use App\Http\Resources\salonSeatResource;
 use App\Models\Request;
 use App\Models\Salon;
 use App\Models\SalonSeat;
+use App\Models\User;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class SalonEloquent
 {
@@ -21,21 +23,7 @@ class SalonEloquent
         $total_pages = ceil($total_records / $page_size);
         $salon = Salon::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
-        $data = [
-            'status' => true,
-            'statusCode' => 200,
-            'message' => 'Success',
-            'items' => [
-                'data' => salonResource::collection($salon),
-                "page_number" => $page_number,
-                "total_pages" => $total_pages,
-                "total_records" => $total_records,
-
-            ]
-
-        ];
-
-        return response()->json($data);
+        return response_api(true, 200, 'Success',salonResource::collection($salon),$page_number,$total_pages,$total_records);
     }
     public function request()
     {
@@ -45,21 +33,8 @@ class SalonEloquent
         $total_pages = ceil($total_records / $page_size);
         $request = Request::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
-        $data = [
-            'status' => true,
-            'statusCode' => 200,
-            'message' => 'Success',
-            'items' => [
-                'data' => requestResource::collection($request),
-                "page_number" => $page_number,
-                "total_pages" => $total_pages,
-                "total_records" => $total_records,
+        return response_api(true, 200, 'Success',requestResource::collection($request),$page_number,$total_pages,$total_records);
 
-            ]
-
-        ];
-
-        return response()->json($data);
     }
     public function salonSeat()
     {
@@ -67,23 +42,54 @@ class SalonEloquent
         $page_size = \request()->get('page_size');
         $total_records = SalonSeat::count();
         $total_pages = ceil($total_records / $page_size);
-        $request = SalonSeat::skip(($page_number - 1) * $page_size)
+        $salon_seat = SalonSeat::skip(($page_number - 1) * $page_size)
             ->take($page_size)->get();
-        $data = [
-            'status' => true,
-            'statusCode' => 200,
-            'message' => 'Success',
-            'items' => [
-                'data' => salonSeatResource::collection($request),
-                "page_number" => $page_number,
-                "total_pages" => $total_pages,
-                "total_records" => $total_records,
 
-            ]
+        return response_api(true, 200, 'Success',salonSeatResource::collection($salon_seat),$page_number,$total_pages,$total_records);
 
-        ];
+    }
+    public function add(array $data){
+        $salon = new Salon();
+        $salon->name = $data['name'];
+        $salon->address = $data['address'];
+        $salon->latitude = $data['latitude'];
+        $salon->longitude = $data['longitude'];
+        $salon->seats_number = $data['seats_number'];
+        for ($i=0;$i<$data['seats_number'];$i++){
+            $salon_seat= new SalonSeat();
+            $salon_seat->seat_number=$i;
+            $salon_seat->status='available';
+            $salon_seat->salon_id=$salon->id;
+            $salon_seat->save();
+        }
+        $salon->isactive = 0;
+        $salon->isonline = $data['isonline'];
+        $salon->user_id  = auth()->user()->id;
+        $salon->save();
+        return response_api(true, 200, 'Successfully Added!',new salonResource($salon));
 
-        return response()->json($data);
+    }
+    public function edit(array  $data){
+        $id = auth()->user()->id;
+        $salon = Salon::where("user_id",$id)->first();
+        $salon->name = $data['name'];
+        if ($data['address'] != null) {
+            $salon->address = $data['address'];
+        }
+        if ($data['latitude'] != null) {
+            $salon->latitude = $data['latitude'];
+        }
+        if ($data['longitude'] != null) {
+            $salon->longitude = $data['longitude'];
+        }
+        if ($data['seats_number'] != null) {
+            $salon->longitude = $data['seats_number'];
+        }
+        if ($data['isonline'] != null) {
+            $salon->longitude = $data['isonline'];
+        }
+        $salon->save();
+        return response_api(true, 200, 'Successfully Updated!',  new salonResource($salon));
     }
 
 
