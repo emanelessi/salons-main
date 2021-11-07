@@ -20,8 +20,8 @@ class salonResource extends JsonResource
             'latitude' => $this->latitude,
             'longitude' => $this->longitude,
             'seats_number' => $this->seats_number,
-            'isactive' => $this->isactive,
-            'isonline' => $this->isonline,
+            'is_active' => $this->is_active,
+            'is_online' => $this->is_online,
         ];
     }
 }

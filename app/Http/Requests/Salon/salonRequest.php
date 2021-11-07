@@ -29,7 +29,7 @@ class salonRequest extends FormRequest
             'latitude' => 'required',
             'longitude' => 'required',
             'seats_number' => 'required|integer',
-            'isonline' => 'required',
+            'is_online' => 'required',
         ];
     }
 }

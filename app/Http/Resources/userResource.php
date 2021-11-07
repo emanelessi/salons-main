@@ -15,7 +15,8 @@ class userResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'full_name'=>$this->full_name,
+            'name'=>$this->full_name,
+            'email'=>$this->email,
             'photo'=>$this->photo,
         ];
     }

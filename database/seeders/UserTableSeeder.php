@@ -23,6 +23,7 @@ class UserTableSeeder extends Seeder
         $user->email='dinashadiakeela@gmail.com';
         $user->password=bcrypt('123456');
         $user->photo='https://i.pinimg.com/originals/bc/ed/58/bced58f3a6e8438485e7f5ccb65e52c7.png';
+        $user->type='owner';
         $user->save();
 
         $user2=new User();
@@ -30,6 +31,7 @@ class UserTableSeeder extends Seeder
         $user2->email='eme@gmail.com';
         $user2->password=bcrypt('123456');
         $user2->photo='https://i.pinimg.com/originals/bc/ed/58/bced58f3a6e8438485e7f5ccb65e52c7.png';
+        $user2->type='customer';
         $user2->save();
 
 //        `name`, `address`, `latitude`, `longitude`, `seats_number`, `isactive`, `isonline`, `user_id`
@@ -39,8 +41,8 @@ class UserTableSeeder extends Seeder
         $salon->latitude=32.079316832803976;
         $salon->longitude=34.76030727805394;
         $salon->seats_number=10;
-        $salon->isactive=0;
-        $salon->isonline=1;
+        $salon->is_active=0;
+        $salon->is_online=1;
         $salon->user_id=$user->id;
         $salon->save();
 

@@ -4,7 +4,7 @@ namespace App\Http\Requests\Salon;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class editRequest extends FormRequest
+class addRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,8 +24,8 @@ class editRequest extends FormRequest
     public function rules()
     {
         return [
-            'status'=> 'required',
-            'request_id'=> 'required',
+            'salon_id' => 'required',
+            'salon_seat_id' => 'required',
         ];
     }
 }

@@ -24,7 +24,9 @@ class SearchRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => 'required|string|max:255',
+//            'name' => 'string|max:255',
+//            'latitude' => 'required|between:-90,90',
+//            'longitude' => 'required|between:-180,180'
         ];
     }
 }

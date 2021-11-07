@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Salon\addRequest;
 use App\Http\Requests\Salon\editRequest;
 use App\Http\Requests\Salon\salonRequest;
 use App\Http\Requests\Salon\salonSeatsRequest;
@@ -16,14 +17,14 @@ class SalonController extends Controller
         $this->salon = $salonEloquent;
     }
 
-    public function show()
+    public function show($id = null)
     {
-        return $this->salon->show();
+        return $this->salon->show($id);
     }
 
-    public function request()
+    public function requests()
     {
-        return $this->salon->request();
+        return $this->salon->requests();
     }
 
     public function salonSeat()
@@ -36,14 +37,19 @@ class SalonController extends Controller
         return $this->salon->add($request->all());
     }
 
+    public function addRequest(addRequest $request)
+    {
+        return $this->salon->addrequest($request->all());
+    }
+
     public function edit(salonRequest $request)
     {
         return $this->salon->edit($request->all());
     }
 
-    public function change_status(editRequest $request)
+    public function editRequest(editRequest $request)
     {
-        return $this->salon->change_status($request->all());
+        return $this->salon->editRequest($request->all());
     }
 
     public function search(SearchRequest $request)

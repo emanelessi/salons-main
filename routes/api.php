@@ -21,10 +21,11 @@ Route::post('search', [SalonController::class, 'search']);
 Route::group(['middleware' => 'auth:api'], function () {
     Route::get('profile/{id?}', [UserController::class, 'profile']);
     Route::put('profile/edit', [UserController::class, 'edit']);
-    Route::post('salons', [SalonController::class, 'show']);
+    Route::post('salons/{id?}', [SalonController::class, 'show']);
     Route::post('salon', [SalonController::class, 'add']);
     Route::put('salon', [SalonController::class, 'edit']);
-    Route::post('request', [SalonController::class, 'request']);
-    Route::put('change-status', [SalonController::class, 'change_status']);
+    Route::post('requests', [SalonController::class, 'requests']);
+    Route::post('request', [SalonController::class, 'addRequest']);
+    Route::put('request', [SalonController::class, 'editRequest']);
 
 });
